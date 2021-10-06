@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy;
+import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy.RepositoryDetectionStrategies;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -18,5 +20,9 @@ public class AppConf {
 
     public @Bean MongoTemplate mongoTemplate(@Autowired Dotenv env) {
         return new MongoTemplate(mongoClient(env), "discord");
+    }
+
+    public RepositoryDetectionStrategy rStrategy(){
+        return RepositoryDetectionStrategies.ANNOTATED;
     }
 }
