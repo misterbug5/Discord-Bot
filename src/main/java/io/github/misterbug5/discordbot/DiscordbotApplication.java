@@ -25,7 +25,7 @@ public class DiscordbotApplication {
 
 	@Bean
 	public Dotenv dotenv(){
-		return Dotenv.load();
+		return Dotenv.configure().ignoreIfMissing().load();
 	}
 
 }
