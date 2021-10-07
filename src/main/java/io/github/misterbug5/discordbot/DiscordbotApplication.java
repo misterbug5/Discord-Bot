@@ -20,13 +20,7 @@ import net.dv8tion.jda.api.JDABuilder;
 public class DiscordbotApplication {
 
 	public static void main(String[] args) throws IOException {
-		URL whatismyip = new URL("http://checkip.amazonaws.com");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-						whatismyip.openStream()));
-
-		String ip = in.readLine(); //you get the IP as a String
-		System.out.println(ip);
-		//SpringApplication.run(DiscordbotApplication.class, args);
+		SpringApplication.run(DiscordbotApplication.class, args);
 	}
 
 	@Bean
