@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "servers")
 public class Server {
-    @MongoId private Long id;
+    @MongoId private String id;
     private ArrayList<Perm> serverPerms;
     private ArrayList<Command> commands;
-    private Long adminChannel;
-    private Long musicChannel;
+    private String adminChannel;
+    private String musicChannel;
     private String prefix;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     
@@ -38,19 +38,19 @@ public class Server {
         this.commands = commands;
     }
     
-    public Long getAdminChannel() {
+    public String getAdminChannel() {
         return adminChannel;
     }
     
-    public void setAdminChannel(Long adminChannel) {
+    public void setAdminChannel(String adminChannel) {
         this.adminChannel = adminChannel;
     }
     
-    public Long getMusicChannel() {
+    public String getMusicChannel() {
         return musicChannel;
     }
     
-    public void setMusicChannel(Long musicChannel) {
+    public void setMusicChannel(String musicChannel) {
         this.musicChannel = musicChannel;
     }
     

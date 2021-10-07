@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import io.github.misterbug5.discordbot.entities.Server;
 
 @Repository
-public interface ServerRepository extends MongoRepository<Server, Long> {
+public interface ServerRepository extends MongoRepository<Server, String> {
     
 }
