@@ -3,8 +3,8 @@ package io.github.misterbug5.discordbot.entities;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -22,7 +22,7 @@ public class Server {
     private String musicChannel;
     private String prefix;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
     public Server(Guild guild) {
         this.id = guild.getId();
