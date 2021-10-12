@@ -28,7 +28,7 @@ public class Server {
         this.id = guild.getId();
         this.serverPerms = GenericAttributes.getServerPerms(guild);
         this.commands = GenericAttributes.getServerCommands();
-        LOGGER.info("Admin: " + guild.getOwnerId());
+        LOGGER.info("Admin: " + guild.getOwner());
         Category cat = guild.createCategory("Admin")
         .addPermissionOverride(guild.getOwner(), EnumSet.of(Permission.VIEW_CHANNEL), null)
         .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
