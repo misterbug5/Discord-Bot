@@ -28,9 +28,8 @@ public class Server {
         this.id = guild.getId();
         this.serverPerms = GenericAttributes.getServerPerms(guild);
         this.commands = GenericAttributes.getServerCommands();
-        LOGGER.info("Admin: " + guild.getMember(guild.getJDA().getUserById(guild.getOwnerId())));
         Category cat = guild.createCategory("Admin")
-        .addPermissionOverride(null, EnumSet.of(Permission.VIEW_CHANNEL), null)
+        .addPermissionOverride(guild.retrieveOwner().complete(), EnumSet.of(Permission.VIEW_CHANNEL), null)
         .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
         .complete();
         TextChannel adminChannel = cat.createTextChannel("Notifications").complete();
