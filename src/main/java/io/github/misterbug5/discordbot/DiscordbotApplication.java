@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import io.github.misterbug5.discordbot.listeners.GeneralEventListener;
+import io.github.misterbug5.discordbot.listeners.GuildJoinedListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -22,7 +22,7 @@ public class DiscordbotApplication {
 	@Bean
 	public JDA bot(@Autowired Dotenv env) throws LoginException{
 		return JDABuilder.createDefault(env.get("DISCORD_TOKEN"))
-		.addEventListeners(new GeneralEventListener())
+		.addEventListeners(new GuildJoinedListener())
 		.build();
 	}
 

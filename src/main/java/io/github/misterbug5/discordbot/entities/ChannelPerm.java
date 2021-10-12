@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class ChannelPerm extends Perm {
     private ArrayList<String> channels;
 
+    public ChannelPerm(){
+    }
+
     public ArrayList<String> getChannels() {
         return channels;
     }

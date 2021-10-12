@@ -1,9 +1,15 @@
 package io.github.misterbug5.discordbot.entities;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 @Document(collection = "servers")
 public class Server {
@@ -13,6 +19,21 @@ public class Server {
     private String adminChannel;
     private String musicChannel;
     private String prefix;
+
+    public Server(Guild guild) {
+        this.id = guild.getId();
+        this.serverPerms = GenericAttributes.getServerPerms(guild);
+        this.commands = GenericAttributes.getServerCommands();
+        Category cat = guild.createCategory("Admin").addPermissionOverride(guild.getOwner(), EnumSet.of(Permission.VIEW_CHANNEL), null).addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL)).complete();
+        TextChannel adminChannel = cat.createTextChannel("Notifications").complete();
+        adminChannel.sendMessage("Joined Successfully to " + guild.getName() + "\nType '>Help' to start").queue();
+        this.adminChannel = adminChannel.getId();
+        this.musicChannel = null;
+        this.prefix = GenericAttributes.getPrefix();
+    }
+
+    public Server() {
+    }
 
     public String getId() {
         return id;

@@ -12,5 +12,12 @@ public class UserPerm extends Perm {
     public void setUsers(ArrayList<String> users) {
         this.users = users;
     }
+
+    public void addUser(String user) {
+        if (users == null) {
+            users = new ArrayList<String>();
+        }
+        users.add(user);
+    }
     
 }

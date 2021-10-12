@@ -13,4 +13,10 @@ public class RollPerm extends Perm {
         this.rolls = rolls;
     }
     
+    public void addRoll(String roll) {
+        if (rolls == null) {
+            rolls = new ArrayList<String>();
+        }
+        rolls.add(roll);
+    }
 }
