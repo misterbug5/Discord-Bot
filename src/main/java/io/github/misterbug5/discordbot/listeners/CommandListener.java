@@ -40,12 +40,12 @@ public class CommandListener extends ListenerAdapter {
     }
 
     private void setCommands(Guild guild) {
-        Server server = this.database.findById(guild.getId(), Server.class);
-        if (server == null) {
-            server = new Server(guild);
-            this.database.insert(server);
-        }
-        this.prefix = server.getPrefix();
+        //Server server = this.database.findById(guild.getId(), Server.class);
+        //if (server == null) {
+        //    server = new Server(guild);
+        //    this.database.insert(server);
+        //}
+        this.prefix = ">";
         this.commands.clear();
         this.commands.add(new Commands("ping", Arrays.asList(this.actions.get(Actions.SAY))));
     }
