@@ -25,22 +25,22 @@ public class GenericAttributes {
         ArrayList<Command> perms = new ArrayList<Command>();
         perms.add(new Command("help", new ArrayList<String>(Arrays.asList("General Role"))){
             {
-                addAction(Actions.show_commands_info);
+                addAction(Actions.HELP);
             }
         });
         perms.add(new Command("ping", new ArrayList<String>(Arrays.asList("General Role"))){
             {
-                addAction(Actions.say, Arguments.ping);
+                addAction(Actions.SAY, Arguments.PING);
             }
         });
         perms.add(new Command("ban", new ArrayList<String>(Arrays.asList("Admin Users"))){
             {
-                addAction(Actions.ban, Arguments.user, Arguments.reason, Arguments.forTime);
+                addAction(Actions.BAN, Arguments.USER, Arguments.REASON, Arguments.FOR_TIME);
             }
         });
         perms.add(new Command("permanentBan", new ArrayList<String>(Arrays.asList("Admin Users"))){
             {
-                addAction(Actions.ban, Arguments.user, Arguments.reason);
+                addAction(Actions.BAN, Arguments.USER, Arguments.REASON);
             }
         });
         return perms;
