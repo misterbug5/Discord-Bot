@@ -26,6 +26,7 @@ public class Commands {
                 case SAY:
                     Say say = new Say();
                     say.setArgs((Arguments[]) action.getArgs().toArray());
+                    this.actions.add(say);
                     break;
             
                 default:
