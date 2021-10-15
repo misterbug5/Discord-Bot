@@ -59,4 +59,12 @@ public class Commands {
         }
         
     }
+
+    public String getHelp(){
+        return "A command called " + getName();
+    }
+
+    public String getUsage(){
+        return "Usage: " + getName();
+    }
 }

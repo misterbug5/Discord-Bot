@@ -3,6 +3,7 @@ package io.github.misterbug5.discordbot.listeners.commands;
 import java.util.ArrayList;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -14,10 +15,13 @@ public class CommandContext {
     private JDA bot;
     private Message message;
     private MessageChannel channel;
+    private ArrayList<Commands> commands;
     private ArrayList<String> argList;
     private Long time;
+    private Guild guild;
 
-    public CommandContext(ArrayList<String> argList, PrivateMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<Commands> commands, PrivateMessageReceivedEvent event) {
+        this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
         this.user = event.getAuthor();
@@ -26,13 +30,15 @@ public class CommandContext {
         this.channel = event.getChannel();
     }
 
-    public CommandContext(ArrayList<String> argList, GuildMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<Commands> commands, GuildMessageReceivedEvent event) {
+        this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
         this.user = event.getAuthor();
         this.bot = event.getJDA();
         this.message = event.getMessage();
         this.channel = event.getChannel();
+        this.guild = event.getGuild();
     }
 
     public User getUser() {
@@ -57,6 +63,14 @@ public class CommandContext {
 
     public Long getTime(){
         return time;
+    }
+
+    public ArrayList<Commands> getCommands() {
+        return commands;
+    }
+
+    public Guild getGuild() {
+        return guild;
     }
 
 }

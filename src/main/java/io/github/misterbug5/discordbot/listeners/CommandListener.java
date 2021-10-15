@@ -3,7 +3,6 @@ package io.github.misterbug5.discordbot.listeners;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class CommandListener extends ListenerAdapter {
     private MongoTemplate database;
     private Hashtable<Actions, IAction> actions;
-    private List<Commands> commands;
+    private ArrayList<Commands> commands;
     private String prefix;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
@@ -69,7 +68,7 @@ public class CommandListener extends ListenerAdapter {
         String commandString = message[0].substring(1).toLowerCase();
         ArrayList<String> args = new ArrayList<String>(Arrays.asList(message));
         args.remove(0);
-        CommandContext context = new CommandContext(args, event);
+        CommandContext context = new CommandContext(args, commands, event);
         this.commands.forEach( command -> {
             if (command.getName().equalsIgnoreCase(commandString)) {
                 command.execute(context);
