@@ -39,13 +39,14 @@ public class Server {
     }
 
     private TextChannel getOrSeTextChannel(Guild guild){
-        Category cat = guild.getCategoriesByName("admin", true).get(0);
-        if (cat == null) {
+        Category cat;
+        if (guild.getCategoriesByName("admin", true).isEmpty()) {
             cat = guild.createCategory("Admin")
         .addPermissionOverride(guild.retrieveOwner().complete(), EnumSet.of(Permission.VIEW_CHANNEL), null)
         .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
         .complete();
         }
+        cat = guild.getCategoriesByName("admin", true).get(0);
         TextChannel admin = null;
         for (TextChannel channel : cat.getTextChannels()) {
             if (channel.getName().equalsIgnoreCase("Bot Admin")) {
