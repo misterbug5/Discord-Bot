@@ -78,6 +78,8 @@ public class CommandListener extends ListenerAdapter {
 
     @Override
     public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
+        if (event.getAuthor().isBot() || event.getAuthor().isSystem()) return;
+        event.getChannel().sendMessage("Hello World").queue();
     }
     
 }
