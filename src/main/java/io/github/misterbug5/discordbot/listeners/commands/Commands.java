@@ -12,6 +12,7 @@ import io.github.misterbug5.discordbot.entities.Action;
 import io.github.misterbug5.discordbot.entities.Command;
 import io.github.misterbug5.discordbot.listeners.commands.actions.IAction;
 import io.github.misterbug5.discordbot.listeners.commands.actions.Say;
+import io.github.misterbug5.discordbot.listeners.commands.actions.Help;
 
 public class Commands {
     private String name;
@@ -35,6 +36,11 @@ public class Commands {
                     Say say = new Say();
                     say.setArgs(args);
                     this.actions.add(say);
+                    break;
+
+                case HELP:
+                    Help help = new Help();
+                    this.actions.add(help);
                     break;
             
                 default:
