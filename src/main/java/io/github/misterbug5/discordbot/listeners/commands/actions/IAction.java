@@ -17,7 +17,7 @@ public abstract class IAction {
 
     protected abstract void process();
 
-    public abstract void setArgs(Arguments arg);
+    public abstract void setArgs(Arguments... arg);
 
     protected abstract void execute();
 

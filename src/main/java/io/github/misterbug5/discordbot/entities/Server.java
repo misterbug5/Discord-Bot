@@ -28,11 +28,7 @@ public class Server {
         this.id = guild.getId();
         this.serverPerms = GenericAttributes.getServerPerms(guild);
         this.commands = GenericAttributes.getServerCommands();
-        Category cat = guild.createCategory("Admin")
-        .addPermissionOverride(guild.retrieveOwner().complete(), EnumSet.of(Permission.VIEW_CHANNEL), null)
-        .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
-        .complete();
-        TextChannel adminChannel = cat.createTextChannel("Notifications").complete();
+        TextChannel adminChannel = getOrSeTextChannel(guild);
         adminChannel.sendMessage("Joined Successfully to " + guild.getName() + "\nType '>Help' to start").queue();
         this.adminChannel = adminChannel.getId();
         this.musicChannel = null;
@@ -40,6 +36,26 @@ public class Server {
     }
 
     public Server() {
+    }
+
+    private TextChannel getOrSeTextChannel(Guild guild){
+        Category cat = guild.getCategoriesByName("admin", true).get(0);
+        if (cat == null) {
+            cat = guild.createCategory("Admin")
+        .addPermissionOverride(guild.retrieveOwner().complete(), EnumSet.of(Permission.VIEW_CHANNEL), null)
+        .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
+        .complete();
+        }
+        TextChannel admin = null;
+        for (TextChannel channel : cat.getTextChannels()) {
+            if (channel.getName().equalsIgnoreCase("Bot Admin")) {
+                admin = channel;
+            }
+        }
+        if (admin == null) {
+            admin = cat.createTextChannel("Bot Admin").complete();
+        }
+        return admin;
     }
 
     public String getId() {

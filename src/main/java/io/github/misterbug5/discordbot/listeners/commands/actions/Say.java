@@ -34,8 +34,8 @@ public class Say extends IAction {
         }
     }
 
-    public void setArgs(Arguments arg) {
-        this.args = arg;
+    public void setArgs(Arguments... arg) {
+        this.args = arg[0];
     }
 
     @Override
