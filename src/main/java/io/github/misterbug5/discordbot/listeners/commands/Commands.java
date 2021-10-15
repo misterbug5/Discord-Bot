@@ -3,6 +3,10 @@ package io.github.misterbug5.discordbot.listeners.commands;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.misterbug5.discordbot.entities.Action;
 import io.github.misterbug5.discordbot.entities.Command;
@@ -13,6 +17,8 @@ public class Commands {
     private String name;
     private List<IAction> actions;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Commands.class);
+
     public Commands(String name, List<IAction> actions) {
         this.name = name.toLowerCase();
         this.actions = actions;
@@ -22,11 +28,12 @@ public class Commands {
         this.name = command.getName();
         this.actions = new ArrayList<IAction>();
         for (Action action : command.getActions()) {
+            Arguments[] args = new Arguments[action.getArgs().size()];
+            args = action.getArgs().toArray(args);
             switch (action.getAction()) {
                 case SAY:
                     Say say = new Say();
-                    Arguments[] args = new Arguments[action.getArgs().size()];
-                    say.setArgs(action.getArgs().toArray(args));
+                    say.setArgs(args);
                     this.actions.add(say);
                     break;
             
@@ -42,9 +49,14 @@ public class Commands {
 
     public void execute(CommandContext context) {
         Iterator<IAction> iterator = actions.iterator();
-        do {
-            IAction action = iterator.next();
-            action.handle(context);
-        } while (iterator.hasNext());
+        try {
+            do {
+                IAction action = iterator.next();
+                action.handle(context);
+            } while (iterator.hasNext());
+        } catch (NoSuchElementException e) {
+            LOGGER.error("Command %s is empty", this.name);
+        }
+        
     }
 }
