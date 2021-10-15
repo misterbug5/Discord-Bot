@@ -25,7 +25,8 @@ public class Commands {
             switch (action.getAction()) {
                 case SAY:
                     Say say = new Say();
-                    say.setArgs((Arguments[]) action.getArgs().toArray());
+                    Arguments[] args = new Arguments[action.getArgs().size()];
+                    say.setArgs(action.getArgs().toArray(args));
                     this.actions.add(say);
                     break;
             
