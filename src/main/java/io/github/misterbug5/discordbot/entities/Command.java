@@ -9,14 +9,18 @@ public class Command {
     private String name;
     private ArrayList<String> permsNeeded;
     private ArrayList<Action> actions;
+    private String helpString;
+    private String usageString;
 
     public Command() {
     }
 
-    public Command(String name, ArrayList<String> permsNeeded) {
+    public Command(String name, ArrayList<String> permsNeeded, String helpString, String usageString) {
         this.name = name;
         this.permsNeeded = permsNeeded;
         this.actions = new ArrayList<Action>();
+        this.helpString = helpString;
+        this.usageString = usageString;
     }
 
     public String getName() {
@@ -25,6 +29,22 @@ public class Command {
     
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHelpString(){
+        return helpString;
+    }
+
+    public void setHelpString(String helpString){
+        this.helpString = helpString;
+    }
+
+    public String getUsageString(){
+        return usageString;
+    }
+
+    public void setUsageString(String usageString){
+        this.usageString = usageString;
     }
     
     public ArrayList<String> getPermsNeeded() {
