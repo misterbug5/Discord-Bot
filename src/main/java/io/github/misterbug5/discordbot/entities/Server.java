@@ -21,9 +21,22 @@ public class Server {
 
     public Server(Guild guild) {
         this.id = guild.getId();
+        this.adminChannel = "";
+        this.musicChannel = "";
+        this.prefix = "";
+        this.adminRole = "";
+        this.customCommands = new ArrayList<CustomCommand>();
+        this.commandSettings = new ArrayList<Command>();
     }
 
     public Server() {
+        this.id = "";
+        this.adminChannel = "";
+        this.musicChannel = "";
+        this.prefix = "";
+        this.adminRole = "";
+        this.customCommands = new ArrayList<CustomCommand>();
+        this.commandSettings = new ArrayList<Command>();
     }
 
     public String getId() {
