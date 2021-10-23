@@ -15,12 +15,12 @@ public class CommandContext {
     private JDA bot;
     private Message message;
     private MessageChannel channel;
-    private ArrayList<Commands> commands;
+    private ArrayList<ICommand> commands;
     private ArrayList<String> argList;
     private Long time;
     private Guild guild;
 
-    public CommandContext(ArrayList<String> argList, ArrayList<Commands> commands, PrivateMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, PrivateMessageReceivedEvent event) {
         this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
@@ -30,7 +30,7 @@ public class CommandContext {
         this.channel = event.getChannel();
     }
 
-    public CommandContext(ArrayList<String> argList, ArrayList<Commands> commands, GuildMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, GuildMessageReceivedEvent event) {
         this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
@@ -65,7 +65,7 @@ public class CommandContext {
         return time;
     }
 
-    public ArrayList<Commands> getCommands() {
+    public ArrayList<ICommand> getCommands() {
         return commands;
     }
 

@@ -2,18 +2,15 @@ package io.github.misterbug5.discordbot.listeners;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import io.github.misterbug5.discordbot.entities.Server;
-import io.github.misterbug5.discordbot.listeners.commands.Actions;
 import io.github.misterbug5.discordbot.listeners.commands.CommandContext;
-import io.github.misterbug5.discordbot.listeners.commands.Commands;
-import io.github.misterbug5.discordbot.listeners.commands.actions.IAction;
-import io.github.misterbug5.discordbot.listeners.commands.actions.Say;
+import io.github.misterbug5.discordbot.listeners.commands.ICommand;
+import io.github.misterbug5.discordbot.listeners.commands.Ping;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
@@ -21,21 +18,19 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
     private MongoTemplate database;
-    private Hashtable<Actions, IAction> actions;
-    private ArrayList<Commands> commands;
+    private ArrayList<ICommand> commands;
     private String prefix;
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
 
     public CommandListener(MongoTemplate database) {
         this.database = database;
-        this.actions = new Hashtable<Actions, IAction>();
-        this.commands = new ArrayList<Commands>();
-        setActions();
+        this.commands = new ArrayList<ICommand>();
+        setCommands();
     }
 
-    private void setActions() {
-        this.actions.put(Actions.SAY, new Say());
+    private void setCommands() {
+        this.commands.add(new Ping());
     }
 
     private void setCommands(Guild guild) {
@@ -45,10 +40,7 @@ public class CommandListener extends ListenerAdapter {
             this.database.insert(server);
         }
         this.prefix = server.getPrefix();
-        this.commands.clear();
-        server.getCommands().forEach(command -> {
-            this.commands.add(new Commands(command));
-        });
+        //this.commands.clear();
     }
 
     @Override
@@ -58,14 +50,12 @@ public class CommandListener extends ListenerAdapter {
 
         if (!event.getMessage().getContentRaw().startsWith(this.prefix)) return;
 
-        LOGGER.info(event.getMessage().getContentDisplay());
-
         executeCommand(event);
     }
 
     private void executeCommand(GuildMessageReceivedEvent event) {
         String[] message = event.getMessage().getContentRaw().split(" ");
-        String commandString = message[0].substring(1).toLowerCase();
+        String commandString = message[0].substring(prefix.length()).toLowerCase();
         ArrayList<String> args = new ArrayList<String>(Arrays.asList(message));
         args.remove(0);
         CommandContext context = new CommandContext(args, commands, event);
