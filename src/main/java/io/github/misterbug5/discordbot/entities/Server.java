@@ -23,7 +23,7 @@ public class Server {
         this.id = guild.getId();
         this.adminChannel = "";
         this.musicChannel = "";
-        this.prefix = "";
+        this.prefix = ">";
         this.adminRole = "";
         this.customCommands = new ArrayList<CustomCommand>();
         this.commandSettings = new ArrayList<Command>();
