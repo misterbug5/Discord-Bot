@@ -2,72 +2,102 @@ package io.github.misterbug5.discordbot.entities;
 
 import java.util.ArrayList;
 
-import io.github.misterbug5.discordbot.listeners.commands.Actions;
-import io.github.misterbug5.discordbot.listeners.commands.Arguments;
-
 public class Command {
     private String name;
-    private ArrayList<String> permsNeeded;
-    private ArrayList<Action> actions;
-    private String helpString;
-    private String usageString;
+    protected ArrayList<String> channels;
+    protected ArrayList<String> notChannels;
+    protected ArrayList<String> roles;
+    protected ArrayList<String> notRoles;
+    protected ArrayList<String> users;
+    protected ArrayList<String> notUsers;
 
-    public Command() {
-    }
-
-    public Command(String name, ArrayList<String> permsNeeded, String helpString, String usageString) {
-        this.name = name;
-        this.permsNeeded = permsNeeded;
-        this.actions = new ArrayList<Action>();
-        this.helpString = helpString;
-        this.usageString = usageString;
+    protected Command(){
+        this.name = "";
+        this.channels = new ArrayList<String>();
+        this.notChannels = new ArrayList<String>();
+        this.roles = new ArrayList<String>();
+        this.notRoles = new ArrayList<String>();
+        this.users = new ArrayList<String>();
+        this.notUsers = new ArrayList<String>();
     }
 
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getHelpString(){
-        return helpString;
+    public ArrayList<String> getChannels() {
+        return channels;
     }
 
-    public void setHelpString(String helpString){
-        this.helpString = helpString;
+    public void setChannels(ArrayList<String> channels) {
+        this.channels = channels;
     }
 
-    public String getUsageString(){
-        return usageString;
+    public ArrayList<String> getNotChannels() {
+        return notChannels;
     }
 
-    public void setUsageString(String usageString){
-        this.usageString = usageString;
-    }
-    
-    public ArrayList<String> getPermsNeeded() {
-        return permsNeeded;
-    }
-    
-    public void setPermsNeeded(ArrayList<String> permsNeeded) {
-        this.permsNeeded = permsNeeded;
-    }
-    
-    public ArrayList<Action> getActions() {
-        return actions;
-    }
-    
-    public void setActions(ArrayList<Action> actions) {
-        this.actions = actions;
+    public void setNotChannels(ArrayList<String> notChannels) {
+        this.notChannels = notChannels;
     }
 
-    public void addAction(Actions action, Arguments... args) {
-        if (actions == null) {
-            actions = new ArrayList<Action>();
-        }
-        actions.add(new Action(action, args));
+    public ArrayList<String> getRoles() {
+        return roles;
     }
-    
+
+    public void setRoles(ArrayList<String> roles) {
+        this.roles = roles;
+    }
+
+    public ArrayList<String> getNotRoles() {
+        return notRoles;
+    }
+
+    public void setNotRoles(ArrayList<String> notRoles) {
+        this.notRoles = notRoles;
+    }
+
+    public ArrayList<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<String> users) {
+        this.users = users;
+    }
+
+    public ArrayList<String> getNotUsers() {
+        return notUsers;
+    }
+
+    public void setNotUsers(ArrayList<String> notUsers) {
+        this.notUsers = notUsers;
+    }
+
+    public void addChannel(String id) {
+        this.channels.add(id);
+    }
+
+    public void addNotChannel(String id) {
+        this.notChannels.add(id);
+    }
+
+    public void addRole(String id) {
+        this.roles.add(id);
+    }
+
+    public void addNotRole(String id) {
+        this.notRoles.add(id);
+    }
+
+    public void addUser(String id) {
+        this.users.add(id);
+    }
+
+    public void addNotUser(String id) {
+        this.notUsers.add(id);
+    }
 }

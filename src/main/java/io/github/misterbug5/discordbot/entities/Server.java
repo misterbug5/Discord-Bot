@@ -1,62 +1,29 @@
 package io.github.misterbug5.discordbot.entities;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 @Document(collection = "servers")
 public class Server {
     @MongoId private String id;
-    private ArrayList<Perm> serverPerms;
-    private ArrayList<Command> commands;
     private String adminChannel;
     private String musicChannel;
     private String prefix;
-
-    //private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
+    private String adminRole;
+    private ArrayList<CustomCommand> customCommands;
+    private ArrayList<Command> commandSettings;
 
     public Server(Guild guild) {
         this.id = guild.getId();
-        this.serverPerms = GenericAttributes.getServerPerms(guild);
-        this.commands = GenericAttributes.getServerCommands();
-        TextChannel adminChannel = getOrSeTextChannel(guild);
-        adminChannel.sendMessage("Joined Successfully to " + guild.getName() + "\nType '>Help' to start").queue();
-        this.adminChannel = adminChannel.getId();
-        this.musicChannel = null;
-        this.prefix = GenericAttributes.getPrefix();
     }
 
     public Server() {
-    }
-
-    private TextChannel getOrSeTextChannel(Guild guild){
-        Category cat;
-        if (guild.getCategoriesByName("admin", true).isEmpty()) {
-            cat = guild.createCategory("Admin")
-        .addPermissionOverride(guild.retrieveOwner().complete(), EnumSet.of(Permission.VIEW_CHANNEL), null)
-        .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
-        .complete();
-        }
-        cat = guild.getCategoriesByName("admin", true).get(0);
-        TextChannel admin = null;
-        for (TextChannel channel : cat.getTextChannels()) {
-            if (channel.getName().equalsIgnoreCase("Bot Admin")) {
-                admin = channel;
-            }
-        }
-        if (admin == null) {
-            admin = cat.createTextChannel("Bot Admin").complete();
-        }
-        return admin;
     }
 
     public String getId() {
@@ -65,22 +32,6 @@ public class Server {
     
     public void setId(String id) {
         this.id = id;
-    }
-    
-    public ArrayList<Perm> getServerPerms() {
-        return serverPerms;
-    }
-    
-    public void setServerPerms(ArrayList<Perm> serverPerms) {
-        this.serverPerms = serverPerms;
-    }
-    
-    public ArrayList<Command> getCommands() {
-        return commands;
-    }
-    
-    public void setCommands(ArrayList<Command> commands) {
-        this.commands = commands;
     }
     
     public String getAdminChannel() {
@@ -105,6 +56,30 @@ public class Server {
     
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public String getAdminRole() {
+        return adminRole;
+    }
+
+    public void setAdminRole(String adminRole) {
+        this.adminRole = adminRole;
+    }
+
+    public ArrayList<CustomCommand> getCustomCommands() {
+        return customCommands;
+    }
+
+    public void setCustomCommands(ArrayList<CustomCommand> customCommands) {
+        this.customCommands = customCommands;
+    }
+
+    public ArrayList<Command> getCommandSettings() {
+        return commandSettings;
+    }
+
+    public void setCommandSettings(ArrayList<Command> commandSettings) {
+        this.commandSettings = commandSettings;
     }
 
 }
