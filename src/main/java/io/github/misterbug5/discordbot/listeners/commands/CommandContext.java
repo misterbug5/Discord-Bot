@@ -19,8 +19,9 @@ public class CommandContext {
     private ArrayList<String> argList;
     private Long time;
     private Guild guild;
+    private String prefix;
 
-    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, PrivateMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, PrivateMessageReceivedEvent event, String prefix) {
         this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
@@ -28,9 +29,11 @@ public class CommandContext {
         this.bot = event.getJDA();
         this.message = event.getMessage();
         this.channel = event.getChannel();
+        this.guild = null;
+        this.prefix = prefix;
     }
 
-    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, GuildMessageReceivedEvent event) {
+    public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, GuildMessageReceivedEvent event, String prefix) {
         this.commands = commands;
         this.time = System.currentTimeMillis();
         this.argList = argList;
@@ -39,6 +42,7 @@ public class CommandContext {
         this.message = event.getMessage();
         this.channel = event.getChannel();
         this.guild = event.getGuild();
+        this.prefix = prefix;
     }
 
     public User getUser() {
@@ -71,6 +75,10 @@ public class CommandContext {
 
     public Guild getGuild() {
         return guild;
+    }
+
+    public String getPrefix() {
+        return prefix;
     }
 
 }

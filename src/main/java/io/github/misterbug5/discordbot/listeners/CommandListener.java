@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import io.github.misterbug5.discordbot.entities.Server;
 import io.github.misterbug5.discordbot.entities.User;
 import io.github.misterbug5.discordbot.listeners.commands.CommandContext;
+import io.github.misterbug5.discordbot.listeners.commands.Help;
 import io.github.misterbug5.discordbot.listeners.commands.ICommand;
 import io.github.misterbug5.discordbot.listeners.commands.Ping;
 import net.dv8tion.jda.api.entities.Guild;
@@ -36,6 +37,8 @@ public class CommandListener extends ListenerAdapter {
     private void setCommands() {
         this.guildCommands.add(new Ping());
         this.privateCommands.add(new Ping());
+        this.guildCommands.add(new Help());
+        this.privateCommands.add(new Help());
     }
 
     private void setCommands(Guild guild) {
@@ -63,7 +66,7 @@ public class CommandListener extends ListenerAdapter {
         String commandString = message[0].substring(prefix.length()).toLowerCase();
         ArrayList<String> args = new ArrayList<String>(Arrays.asList(message));
         args.remove(0);
-        CommandContext context = new CommandContext(args, guildCommands, event);
+        CommandContext context = new CommandContext(args, guildCommands, event, this.prefix);
         this.guildCommands.forEach( command -> {
             if (command.getName().equalsIgnoreCase(commandString)) {
                 command.execute(context);
@@ -82,7 +85,7 @@ public class CommandListener extends ListenerAdapter {
         String commandString = message[0].substring(this.privateUser.getPrefix().length()).toLowerCase();
         ArrayList<String> args = new ArrayList<String>(Arrays.asList(message));
         args.remove(0);
-        CommandContext context = new CommandContext(args, privateCommands, event);
+        CommandContext context = new CommandContext(args, privateCommands, event, this.privateUser.getPrefix());
         this.privateCommands.forEach( command -> {
             if (command.getName().equalsIgnoreCase(commandString)) {
                 command.execute(context);
