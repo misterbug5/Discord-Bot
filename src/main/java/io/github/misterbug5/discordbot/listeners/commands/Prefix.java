@@ -44,7 +44,7 @@ public class Prefix implements ICommand {
                 Server.class);
         } else {
             database.findAndModify(
-                Query.query(Criteria.where("_id").is(context.getGuild().getId())),
+                Query.query(Criteria.where("_id").is(context.getUser().getId())),
                 new Update().set("prefix", prefix),
                 User.class);
         }
