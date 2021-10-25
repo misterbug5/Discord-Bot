@@ -20,7 +20,7 @@ public class Ping implements ICommand {
     @Override
     public void execute(CommandContext context) {
         context.getChannel().sendMessage("Pong!").queue(message->{
-            message.editMessageFormat("%d", System.currentTimeMillis()-context.getTime()).queue();
+            message.editMessageFormat("%dms", System.currentTimeMillis()-context.getTime()).queue();
         });
     }
     
