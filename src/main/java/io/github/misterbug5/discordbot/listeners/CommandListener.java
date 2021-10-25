@@ -13,6 +13,7 @@ import io.github.misterbug5.discordbot.listeners.commands.CommandContext;
 import io.github.misterbug5.discordbot.listeners.commands.Help;
 import io.github.misterbug5.discordbot.listeners.commands.ICommand;
 import io.github.misterbug5.discordbot.listeners.commands.Ping;
+import io.github.misterbug5.discordbot.listeners.commands.Prefix;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
@@ -31,14 +32,16 @@ public class CommandListener extends ListenerAdapter {
         this.database = database;
         this.guildCommands = new ArrayList<ICommand>();
         this.privateCommands = new ArrayList<ICommand>();
-        setCommands();
+        addCommands();
     }
 
-    private void setCommands() {
+    private void addCommands() {
         this.guildCommands.add(new Ping());
         this.privateCommands.add(new Ping());
         this.guildCommands.add(new Help());
         this.privateCommands.add(new Help());
+        this.guildCommands.add(new Prefix(database));
+        this.privateCommands.add(new Prefix(database));
     }
 
     private void setCommands(Guild guild) {
