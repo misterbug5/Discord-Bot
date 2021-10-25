@@ -30,7 +30,7 @@ public class Help implements ICommand {
             .appendDescription(String.format("Working on help you to have a nice day in %s", context.getGuild().getName()));
         }else{
             embed.setThumbnail(context.getBot().getSelfUser().getEffectiveAvatarUrl())
-            .appendDescription(String.format("Working on %d servers with you", context.getBot().getMutualGuilds(context.getUser()).size()));
+            .appendDescription(String.format("Working on %d servers with you", context.getUser().getMutualGuilds().size()));
         }
         String args = String.join(" ", context.getArgs());
         ArrayList<ICommand> commands = context.getCommands();
