@@ -39,12 +39,16 @@ public class Help implements ICommand {
                 embed.addField(command.getName(), command.getHelp(), false);
             });
         } else {
+            int fields = embed.getFields().size();
             commands.forEach(command -> {
                 if (command.getName().equalsIgnoreCase(args)) {
                     embed.addField("Description", command.getHelp(), false);
                     embed.addField("Usage", command.getUsage(context.getPrefix()), false);
                 }
             });
+            if (fields == embed.getFields().size()) {
+                embed.addField("Error", String.format("The command \"%s\" not exist", args), false);
+            }
         }
         context.getChannel().sendMessageEmbeds(embed.build()).queue();
     }
