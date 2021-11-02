@@ -27,11 +27,16 @@ public class Prefix implements ICommand {
 
     @Override
     public String getUsage(String prefix) {
-        return String.format("%sprefix [new prefix (without spaces)]", prefix);
+        return String.format("%sadmin prefix [new prefix (without spaces)]", prefix);
     }
 
     @Override
     public void execute(CommandContext context) {
+        context.getChannel().sendMessageFormat("admin perms are needed\nPlease put %sadmin prefix", context.getPrefix()).queue();
+    }
+
+    @Override
+    public void admin(CommandContext context) {
         if (context.getArgs().size() != 1) {
             context.getChannel().sendMessage("You must put a valid prefix without spaces").queue();
             return;

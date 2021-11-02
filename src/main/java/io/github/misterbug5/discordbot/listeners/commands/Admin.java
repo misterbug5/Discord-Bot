@@ -2,9 +2,12 @@ package io.github.misterbug5.discordbot.listeners.commands;
 
 import java.util.ArrayList;
 
-import net.dv8tion.jda.api.entities.User;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class Admin implements ICommand {
+
+    //private static Logger log = LoggerFactory.getLogger(Admin.class);
 
     @Override
     public String getName() {
@@ -27,7 +30,7 @@ public class Admin implements ICommand {
         String command = args.get(0).replaceFirst(context.getPrefix(), "");
         args.remove(0);
         ArrayList<ICommand> commands = context.getCommands();
-        if (hasAdmin(context.getUser())){
+        if (hasAdmin(context)){
             boolean found = false;
             for (ICommand iCommand : commands) {
                 if(!iCommand.getName().equalsIgnoreCase(command)){
@@ -49,9 +52,15 @@ public class Admin implements ICommand {
         context.getChannel().sendMessage("You have admin perms").queue();
     }
 
-    public boolean hasAdmin(User user){
-        // TODO Check if user has admin perms
-        return true;
+    public boolean hasAdmin(CommandContext context){
+        if (context.getGuild() == null) {
+            return true;
+        }
+        boolean admin = false;
+        if (context.getGuild().retrieveOwner().complete().getUser().getId().equals(context.getUser().getId())) {
+            admin = true;
+        }
+        return admin;
     }
     
 }
