@@ -14,6 +14,8 @@ public class Server {
     @MongoId private String id;
     private String adminChannel;
     private String musicChannel;
+    private String logChannel;
+    private String notificationsChannel;
     private String prefix;
     private String adminRole;
     private ArrayList<CustomCommand> customCommands;
@@ -93,6 +95,22 @@ public class Server {
 
     public void setCommandSettings(ArrayList<Command> commandSettings) {
         this.commandSettings = commandSettings;
+    }
+
+    public String getLogChannel() {
+        return logChannel;
+    }
+
+    public void setLogChannel(String logChannel) {
+        this.logChannel = logChannel;
+    }
+
+    public String getNotificationsChannel() {
+        return notificationsChannel;
+    }
+
+    public void setNotificationsChannel(String notificationsChannel) {
+        this.notificationsChannel = notificationsChannel;
     }
 
 }

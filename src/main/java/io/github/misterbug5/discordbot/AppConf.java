@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy;
 import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy.RepositoryDetectionStrategies;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.misterbug5.discordbot.entities.Server;
+import io.github.misterbug5.discordbot.entities.User;
 
 @Configuration
 public class AppConf {
@@ -19,7 +23,25 @@ public class AppConf {
     }
 
     public @Bean MongoTemplate mongoTemplate(@Autowired Dotenv env) {
-        return new MongoTemplate(mongoClient(env), "discord");
+        MongoTemplate database = new MongoTemplate(mongoClient(env), "discord");
+        database.update(User.class)
+        .matching(Criteria.where("version").exists(false))
+        .apply(
+            Aggregation.newUpdate().set("version").toValue(0)
+            ).all();
+        database.update(Server.class)
+        .matching(Criteria.where("version").exists(false))
+        .apply(
+            Aggregation.newUpdate().set("version").toValue(0)
+            ).all();
+        database.update(Server.class)
+        .matching(Criteria.where("version").is(0))
+        .apply(
+            Aggregation.newUpdate().set("logChannel").toValue("")
+            .set("notificationsChannel").toValue("")
+            .set("version").toValue(1)
+            ).all();
+        return database;
     }
 
     public RepositoryDetectionStrategy rStrategy(){
