@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import io.github.misterbug5.discordbot.entities.Server;
 import io.github.misterbug5.discordbot.entities.User;
 import io.github.misterbug5.discordbot.listeners.commands.Admin;
+import io.github.misterbug5.discordbot.listeners.commands.Channel;
 import io.github.misterbug5.discordbot.listeners.commands.CommandContext;
 import io.github.misterbug5.discordbot.listeners.commands.Help;
 import io.github.misterbug5.discordbot.listeners.commands.ICommand;
@@ -45,6 +46,7 @@ public class CommandListener extends ListenerAdapter {
         this.privateCommands.add(new Prefix(database));
         this.guildCommands.add(new Admin());
         this.privateCommands.add(new Admin());
+        this.guildCommands.add(new Channel(database));
     }
 
     private void setCommands(Guild guild) {

@@ -20,6 +20,8 @@ public class CommandContext {
     private Long time;
     private Guild guild;
     private String prefix;
+    private PrivateMessageReceivedEvent privateEvent;
+    private GuildMessageReceivedEvent guildEvent;
 
     public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, PrivateMessageReceivedEvent event, String prefix) {
         this.commands = commands;
@@ -31,6 +33,8 @@ public class CommandContext {
         this.channel = event.getChannel();
         this.guild = null;
         this.prefix = prefix;
+        this.privateEvent = event;
+        this.guildEvent = null;
     }
 
     public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, GuildMessageReceivedEvent event, String prefix) {
@@ -43,6 +47,8 @@ public class CommandContext {
         this.channel = event.getChannel();
         this.guild = event.getGuild();
         this.prefix = prefix;
+        this.privateEvent = null;
+        this.guildEvent = event;
     }
 
     public User getUser() {
@@ -79,6 +85,14 @@ public class CommandContext {
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public PrivateMessageReceivedEvent getPrivateEvent() {
+        return privateEvent;
+    }
+
+    public GuildMessageReceivedEvent getGuildEvent() {
+        return guildEvent;
     }
 
 }
