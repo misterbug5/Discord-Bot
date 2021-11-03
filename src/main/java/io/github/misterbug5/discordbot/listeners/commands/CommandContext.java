@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
@@ -22,6 +25,9 @@ public class CommandContext {
     private String prefix;
     private PrivateMessageReceivedEvent privateEvent;
     private GuildMessageReceivedEvent guildEvent;
+    private Member member;
+    private VoiceChannel voiceChannel;
+    private TextChannel textChannel;
 
     public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, PrivateMessageReceivedEvent event, String prefix) {
         this.commands = commands;
@@ -35,6 +41,9 @@ public class CommandContext {
         this.prefix = prefix;
         this.privateEvent = event;
         this.guildEvent = null;
+        this.member = null;
+        this.voiceChannel = null;
+        this.textChannel = null;
     }
 
     public CommandContext(ArrayList<String> argList, ArrayList<ICommand> commands, GuildMessageReceivedEvent event, String prefix) {
@@ -49,6 +58,9 @@ public class CommandContext {
         this.prefix = prefix;
         this.privateEvent = null;
         this.guildEvent = event;
+        this.member = event.getMember();
+        this.voiceChannel = event.getMember().getVoiceState().getChannel();
+        this.textChannel = event.getChannel();
     }
 
     public User getUser() {
@@ -93,6 +105,18 @@ public class CommandContext {
 
     public GuildMessageReceivedEvent getGuildEvent() {
         return guildEvent;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public VoiceChannel getVoiceChannel() {
+        return voiceChannel;
+    }
+
+    public TextChannel getTextChannel() {
+        return textChannel;
     }
 
 }
