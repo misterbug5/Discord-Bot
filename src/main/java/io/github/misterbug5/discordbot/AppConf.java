@@ -24,22 +24,23 @@ public class AppConf {
 
     public @Bean MongoTemplate mongoTemplate(@Autowired Dotenv env) {
         MongoTemplate database = new MongoTemplate(mongoClient(env), "discord");
+        String versionControlString = "version";
         database.update(User.class)
-        .matching(Criteria.where("version").exists(false))
+        .matching(Criteria.where(versionControlString).exists(false))
         .apply(
-            Aggregation.newUpdate().set("version").toValue(0)
+            Aggregation.newUpdate().set(versionControlString).toValue(0)
             ).all();
         database.update(Server.class)
-        .matching(Criteria.where("version").exists(false))
+        .matching(Criteria.where(versionControlString).exists(false))
         .apply(
-            Aggregation.newUpdate().set("version").toValue(0)
+            Aggregation.newUpdate().set(versionControlString).toValue(0)
             ).all();
         database.update(Server.class)
-        .matching(Criteria.where("version").is(0))
+        .matching(Criteria.where(versionControlString).is(0))
         .apply(
             Aggregation.newUpdate().set("logChannel").toValue("")
             .set("notificationsChannel").toValue("")
-            .set("version").toValue(1)
+            .set(versionControlString).toValue(1)
             ).all();
         return database;
     }
